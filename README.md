@@ -54,6 +54,6 @@ touch composer.json
 ### Running the test cases locally.
 
 ``` bash
-XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html html
+XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html html test/
 ```
 
