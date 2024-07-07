@@ -10,21 +10,23 @@ class Api
     {
         $request = json_decode(file_get_contents('php://input'), true);
         if (!isset($request['firstNumber']) || !isset($request['secondNumber'])) {
-            return json_encode([
-                "message" => "Plese provide the numbers",
-                "status" => "400",
-                "success" => false
-            ]);
+            return $this->sendResponse(400, "Please provide the numbers", false);
+        }
+        if (!is_numeric($request['firstNumber']) || !is_numeric($request['secondNumber'])) {
+            return $this->sendResponse(400, "Inputs must be numbers", false);
         }
         $cal = new Calculator();
         $sum = $cal->additional($request['firstNumber'], $request['secondNumber']);
+        return $this->sendResponse(200, "Calculated successfully", true, ['sum' => $sum]);
+    }
+    private function sendResponse($status, $message, $success, $data = [])
+    {
+        header('Content-Type: application/json');
         return json_encode([
-            "message" => "Calculated successfully",
-            "status" => "200",
-            "success" => true,
-            "data" => [
-                "sum" => $sum
-            ]
+            "message" => $message,
+            "status" => $status,
+            "success" => $success,
+            "data" => $data
         ]);
     }
 }
