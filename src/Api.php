@@ -2,7 +2,7 @@
 
 namespace phpunittestproject;
 
-require 'Calculator.php';
+require '../vendor/autoload.php';
 
 class Api
 {
